@@ -116,7 +116,7 @@ const winningArrays = [
         setTimeout(remover, 5000)
       }
       //check those squares to see if they all have the class of player-two
-      if (
+      if(
         square1.classList.contains('player-two') &&
         square2.classList.contains('player-two') &&
         square3.classList.contains('player-two') &&
