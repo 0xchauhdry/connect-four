@@ -1,5 +1,6 @@
 // Initialization 
 const grid = document.querySelector('.grid')
+const result = document.querySelector('#winner')
 const displayCurrentPlayer = document.querySelector('#player')
 let currentPlayer = 1
 
@@ -7,11 +8,15 @@ let currentPlayer = 1
 
 function createGrid(){
     // Creating Grid
-    for (let i=1; i<= 42; i++){
+    for (let i=0; i < 42; i++){
         const box = document.createElement('div')
         box.classList.add('box')
-        box.setAttribute('data-id', i)
         grid.append(box)
+    }
+    for (let i=42; i<=49; i++){
+      const box = document.createElement('div')
+      box.classList.add('taken')
+      grid.append(box)
     }
 }
 
@@ -106,7 +111,9 @@ const winningArrays = [
         square4.classList.contains('player-one')
       )
       {
+        alert ('Player One Wins! Game resetting in 5 seconds')
         result.innerHTML = 'Player One Wins!'
+        setTimeout(remover, 5000)
       }
       //check those squares to see if they all have the class of player-two
       if (
@@ -116,18 +123,33 @@ const winningArrays = [
         square4.classList.contains('player-two')
       )
       {
+        alert ('Player Two Wins! Game resetting in 5 seconds')
         result.innerHTML = 'Player Two Wins!'
+        setTimeout(remover, 5000)
       }
     }
   }
 
-
-    
-for (let i = 0; i < 42; i++) {
+  function remover(){
     const squares = document.querySelectorAll('.box')
-    for (i=42; squares[i].getAttribute('data-id') >= 36 ; i--){
-        squares[i].classList.add('taken')
+    for (i=0; i < squares.length; i++){
+      squares[i].classList.remove('taken')
+      squares[i].classList.remove('player-one')
+      squares[i].classList.remove('player-two')
     }
+    result.innerHTML = ""
+  }
+
+
+
+window.addEventListener('DOMContentLoaded', () => {
+    createGrid()
+
+  const squares = document.querySelectorAll('.grid div')
+  
+// defining onclick event here
+
+  for (let i = 0; i < squares.length; i++) {
     squares[i].onclick = () => {
       //if the square below your current square is taken, you can go ontop of it
       if (squares[i + 7].classList.contains('taken') &&!squares[i].classList.contains('taken')) {
@@ -146,7 +168,4 @@ for (let i = 0; i < 42; i++) {
       checkBoard()
     }
   }
-
-window.addEventListener('DOMContentLoaded', () => {
-    createGrid()
 })
